@@ -23,7 +23,7 @@ const menu=`
 11: retour un livre
 *****************************
 `
-console.table(menu);
+console.log(menu);
 
 
 let ID=1
@@ -73,7 +73,7 @@ id : ID++,
 
 function OpérationsSurLesLivres(){
 if(arr.length==0){
-    console.log("livre not disponible")
+    console.log("livre not disponible");
 }else{
 console.table(arr);
 }
@@ -139,7 +139,10 @@ function GestionAabonnés(){
     let prenom =prompt("entrez prenom : ");
     let email=prompt("entre email : ");
 
-   
+   if(!email.includes("@gmail.com")){
+    console.log("email invalide");
+    return;
+   }
 
 
     abonnearr.push({
@@ -158,57 +161,50 @@ email:email,
     
 function GestionEmprunts(){
 
-let idAbonne=Number(prompt("entres id d'abonne : "));
-let id_abonne
-let ID_livre 
-abonnearr.map((abonnee)=>{
-    if(abonnee.id===idAbonne){
-    id_abonne = abonnee.id
+    let idAbonne = Number(prompt("entres id d'abonne : "));
+    let id_abonne;
+    let ID_livre;
 
-}else {
-    console.log("not id abonne");
-}
-})
+    let abonne = abonnearr.find((abonnee) => abonnee.id === idAbonne);
 
-let idlivre=Number(prompt("entre id de livre : "));
-
-arr.find((livre)=>{
-    if(livre.id===idlivre && livre.disponible){
-        ID_livre = livre.id
-        livre.disponible = false
-    }else{
-        console.log("not id livre ");
+    if(!abonne){
+        console.log("not id abonne");
+        return;
     }
-})
 
+    id_abonne = abonne.id;
 
-if(id_abonne && ID_livre){
-let empur = {
-abonne: id_abonne ,
-livre:   ID_livre,
-date: new Date().toDateString()
+    let idlivre = Number(prompt("entre id de livre : "));
+
+    let livre = arr.find((liv) => liv.id === idlivre);
+
+    if(!livre){
+        console.log("not id livre");
+        return;
+    }
+
+    if(!livre.disponible){
+        console.log("livre déjà emprunté");
+        return;
+    }
+
+    livre.disponible = false;
+    ID_livre = livre.id;
+
+    let empur = {
+        abonne: id_abonne,
+        livre: ID_livre,
+        date: new Date().toDateString()
+    };
+
+    emprunts.push(empur);
+    console.table(emprunts);
 }
-emprunts.push(empur)
 
-}}
-
-
-function empruntts(){
-
-let n=Number(prompt("entres id d'abonne : "));
-
-emprunts.map((empru)=>{
-if(n===empru.abonne){
-    console.table(empru);
-}
-}
-    
-)
-}
 
 function retourlivre(){
 
-let iddAbonne=Number(prompt("entre idd abonne"));
+let iddAbonne=Number(prompt("entre idd abonne : "));
 
 
 
@@ -223,29 +219,30 @@ abonnearr.map((abone)=>{
 }
 })
 
-let iddLivre=Number(prompt("entre id retour le livre"));
+let iddLivre=Number(prompt("entre id retour le livre : "));
 
 arr.find((livrre)=>{
-    if(livrre.id===iddLivre && livrre.disponible===false
-        
-    ){
+    if(livrre.id===iddLivre && livrre.disponible===false){
         IDlivre = livrre.id
-        livrre.disponible = true
-    }else{
-        console.log("not id livre ");
+        livrre.disponible = false
     }
 })
-
-
 
 } 
 
 
+function empruntts(){
 
+let n=Number(prompt("entres id d'abonne : "));
 
+emprunts.forEach((empru)=>{
+    if(empru.abonne === n){
+        console.table(empru);
+    }
+});
 
-
-
+}
+    
 
 while(true){
     let commend =Number(prompt("entres nomber "));

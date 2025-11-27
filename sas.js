@@ -72,6 +72,7 @@ id : ID++,
     }
 
 function OpérationsSurLesLivres(){
+    
 if(arr.length==0){
     console.log("livre not disponible");
 }else{
@@ -206,10 +207,9 @@ function retourlivre(){
 
 let iddAbonne=Number(prompt("entre idd abonne : "));
 
-
-
 let idabonne
 let IDlivre 
+
 abonnearr.map((abone)=>{
     if(abone.id===iddAbonne){
     idabonne = abone.id
@@ -224,7 +224,7 @@ let iddLivre=Number(prompt("entre id retour le livre : "));
 arr.find((livrre)=>{
     if(livrre.id===iddLivre && livrre.disponible===false){
         IDlivre = livrre.id
-        livrre.disponible = false
+        livrre.disponible = true
     }
 })
 
